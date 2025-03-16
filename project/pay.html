@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-header {
+            background-color: #6200ea;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        .back-btn {
+            background-color: #ccc;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .back-btn:hover {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">Payment</div>
+        <div class="app-body">
+            <div class="form-group" id="payment-method">
+                <label>Payment Method</label>
+                <button id="select-mpesa">Mpesa</button>
+            </div>
+            <div class="form-group" id="phone-number-container">
+                <label for="phone-number">Enter Mpesa Number</label>
+                <input type="text" id="phone-number" placeholder="Enter phone number">
+                <button id="confirm-phone">Next</button>
+            </div>
+            <div class="form-group" id="amount-container">
+                <label for="amount">Enter Amount</label>
+                <input type="number" id="amount" placeholder="Enter amount">
+                <button id="confirm-amount">Next</button>
+            </div>
+            <div class="form-group" id="pin-container">
+                <label for="mpesa-pin">Enter Mpesa PIN</label>
+                <input type="password" id="mpesa-pin" placeholder="Enter PIN">
+                <button id="confirm-pin">Pay</button>
+            </div>
+        </div>
+        <div class="app-footer">
+            <button class="back-btn" id="back">Back</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('payment-method').style.display = 'block';
+
+        document.getElementById('select-mpesa').addEventListener('click', () => {
+            document.getElementById('payment-method').style.display = 'none';
+            document.getElementById('phone-number-container').style.display = 'block';
+        });
+
+        document.getElementById('confirm-phone').addEventListener('click', () => {
+            let phoneNumber = document.getElementById('phone-number').value;
+            if (!phoneNumber) {
+                alert('Please enter a phone number.');
+                return;
+            }
+            document.getElementById('phone-number-container').style.display = 'none';
+            document.getElementById('amount-container').style.display = 'block';
+        });
+
+        document.getElementById('confirm-amount').addEventListener('click', () => {
+            let amount = parseInt(document.getElementById('amount').value);
+            if (!amount || isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+            document.getElementById('amount-container').style.display = 'none';
+            document.getElementById('pin-container').style.display = 'block';
+        });
+
+        document.getElementById('confirm-pin').addEventListener('click', () => {
+            let mpesaPin = document.getElementById('mpesa-pin').value;
+            if (!mpesaPin) {
+                alert('Please enter your Mpesa PIN.');
+                return;
+            }
+            alert('Payment successful!');
+            
+            let amount = parseInt(document.getElementById('amount').value);
+            let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
+            let newBalance = currentBalance + amount;
+            localStorage.setItem('balance', newBalance);
+            localStorage.setItem('balanceUpdated', 'true');
+            
+            window.location.href = 'pay.html';
+        });
+
+        document.getElementById('back').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

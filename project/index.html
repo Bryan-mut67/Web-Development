@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticketing System</title>
+    <style>
+        /* General styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* App container */
+        .app-container {
+            max-width: 360px;
+            height: 90vh;
+            margin: 0 auto;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 10vh;
+        }
+
+        /* Split screen layout */
+        .split {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .bus-section, .info-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Bus image section */
+        .bus-section {
+            background-color: #e6e6e6;
+        }
+
+        .bus-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        /* Information section */
+        .info-section {
+            background-color: #ffffff;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .forgot-password {
+            color: #007BFF;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .login {
+            background: #28a745;
+        }
+        .login:hover {
+            background: #218838;
+        }
+
+        .create-account {
+            background: #28a745;
+        }
+        .create-account:hover {
+            background: #218838;
+        }
+        .terms {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Admin section */
+        .admin-section {
+            display: none;
+            flex-direction: column;
+        }
+
+        .admin-section.active {
+            display: flex;
+        }
+
+        .toggle-login {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="split">
+            <!-- Bus Image Section -->
+            <div class="bus-section">
+                <img src="bus.png" alt="Bus Image" class="bus-image">
+            </div>
+
+            <!-- Information Section -->
+            <div class="info-section">
+                <!-- Toggle buttons for student and admin -->
+                <div class="toggle-login">
+                    <button id="student-login-toggle">Student Login</button>
+                    <button id="admin-login-toggle">Admin Login</button>
+                </div>
+
+                <!-- Student Login Form -->
+                <div id="student-login-form">
+                    <form id="login-form">
+                        <label for="email">Enter student email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter student email" required>
+            
+                        <label for="password">Enter password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+            
+                        <div class="remember-me">
+                            <label><input type="checkbox" id="remember-me"> Remember Me</label>
+                            <a href="forgot.html" class="forgot-password">Forgot password?</a>
+                        </div>
+            
+                        <button type="button" class="login" onclick="window.location.href='dashboard.html'">Login</button>
+                        <button type="button" class="create-account" onclick="window.location.href='createac.html'">Create An Account</button>
+                    </form>
+                </div>
+
+                <!-- Admin Login Form -->
+                <div id="admin-login-form" class="admin-section">
+                    <form id="admin-login">
+                        <label for="admin-email">Enter admin email</label>
+                        <input type="email" id="admin-email" name="admin-email" placeholder="Enter admin email" required>
+            
+                        <label for="admin-password">Enter password</label>
+                        <input type="password" id="admin-password" name="admin-password" placeholder="Enter password" required>
+            
+                
+                        <button type="button" class="login" onclick="window.location.href='verify.html'">Admin Login</button>
+                        
+                    </form>
+                </div>
+            </div>
+            <p class="terms">
+                By logging in, you agree to our terms and conditions & privacy policy.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Ensure the login forms reset every time the page loads
+        window.onload = function() {
+            // Make sure the student login form is shown by default
+            document.getElementById("student-login-form").style.display = "block";
+            document.getElementById("admin-login-form").classList.remove("active");
+        }
+
+        // Toggle between student and admin login forms
+        document.getElementById("student-login-toggle").addEventListener("click", function () {
+            document.getElementById("student-login-form").style.display = "block";
+            document.getElementById("admin-login-form").classList.remove("active");
+        });
+
+        document.getElementById("admin-login-toggle").addEventListener("click", function () {
+            document.getElementById("student-login-form").style.display = "none";
+            document.getElementById("admin-login-form").classList.add("active");
+        });
+
+        // Reset to default state after navigating back to the page
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                document.getElementById("student-login-form").style.display = "block";
+                document.getElementById("admin-login-form").classList.remove("active");
+            }
+        };
+
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            
+            if (email === "" || password === "") {
+                alert("Please fill in both fields.");
+                event.preventDefault();
+            }
+        });
+
+        document.getElementById("admin-login").addEventListener("submit", function(event) {
+            var adminEmail = document.getElementById("admin-email").value;
+            var adminPassword = document.getElementById("admin-password").value;
+            
+            if (adminEmail === "" || adminPassword === "") {
+                alert("Please fill in both fields.");
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

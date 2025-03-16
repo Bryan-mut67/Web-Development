@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #002d00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .bus-section {
+            max-width: 360px;
+            height: 90vh;
+            margin: 0 auto;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 10vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .split {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .bus-section, .info-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .bus-section {
+            width: 100%;
+            height: auto;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .bus-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:focus {
+            outline: none; /* Remove focus outline */
+        }
+        .back-button {
+            background: #6c757d;
+        }
+        .back-button:hover {
+            background: #545b62;
+        }
+        .reset-code-section {
+            display: none; /* Hidden by default */
+            text-align: center;
+        }
+        .reset-code-section input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .reset-code-section button {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .reset-code-section button:hover {
+            background: #218838;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="bus-section">
+            <img src="bus.png" alt="Bus Image" class="bus-image">
+        <h2>Reset Password</h2>
+        <p>Enter your email to receive a password reset link.</p>
+        <form id="forgot-password-form">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Send Reset Link</button>
+            <button type="button" class="back-button" onclick="window.location.href='index.html'">Back to Login</button>
+            </form>
+            
+            <div class="reset-code-section">
+                <h2>Enter Reset Code</h2>
+                <p>We've sent a reset code to your email. Please enter it below:</p>
+                <form id="reset-code-form">
+                    <label for="reset-code">Reset Code</label>
+                    <input type="text" id="reset-code" name="reset-code" placeholder="Enter reset code" required>
+                    <button type="submit">Verify Code</button>
+        </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("forgot-password-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            if (email === "") {
+                alert("Please enter your email.");
+            } else {
+                alert("A password reset link has been sent to " + email);
+                // Here, you can add code to handle the actual password reset logic (API request, Firebase, etc.)
+            }
+        });
+        document.getElementById("reset-code-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var resetCode = document.getElementById("reset-code").value;
+            if (resetCode === "") {
+                alert("Please enter the reset code.");
+            } else {
+                alert("Code verified successfully! Now you can reset your password.");
+                // Here you would typically redirect to a password reset page
+            }
+        });
+    </script>
+</body>
+</html>
